@@ -24,14 +24,16 @@ module.exports.updateProduct = async function(req, res){
         description: req.body.description
     }, {
         where: {
-            id:req.params.id
+            id: req.params.id
         }
     });
     res.redirect(`/products/profile/${req.params.id}`);
 }
 
 module.exports.viewProducts = async function (req, res){
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+        include: 'reviews'
+    });
     res.render('index', {products})
 }
 
